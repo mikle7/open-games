@@ -34,9 +34,9 @@ function addFPS()
 {
     const stats = new Stats();
 
-    stats.dom.style.transform = 'scale(3)';
-    stats.dom.style.top = `${80}px`;
-    stats.dom.style.left = `${100}px`;
+ 
+    stats.dom.style.top = `${10}px`;
+    stats.dom.style.left = `${10}px`;
     document.body.appendChild(stats.dom);
 
     function update()
