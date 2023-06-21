@@ -20,7 +20,7 @@ class MeasureView
         this.domElement.style.width = '100px';
         // align text to left
         
-        this.domElement.style.backgroundColor = '#FFFFFF';
+        this.domElement.style.backgroundColor = 'rgba(255,255,255,0.5)';
 
        
         

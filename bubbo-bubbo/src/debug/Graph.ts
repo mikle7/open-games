@@ -21,10 +21,10 @@ export class Graph
         context.fillStyle = '#000000';
         context.fillRect(0, 0, width, height);
 
-        context.fillStyle = '#CCCCCC';
+        context.fillStyle = '#141414';
         context.fillRect(0, 0, width - 1, height);
 
-        context.fillStyle = '#FF0000';
+        context.fillStyle = '#E72264';
         context.fillRect(width - 1, 0, 1, height);
 
         this.canvas = canvas;
@@ -39,12 +39,12 @@ export class Graph
         context.drawImage(this.canvas, 0, 0, width, height, -1, 0, width, height);
 
 
-        context.fillStyle = '#CCCCCC';
+        context.fillStyle = '#141414';
         context.fillRect(width - 1, 0, width - 1, height);
 
         const val = (1 - value) * height;
 
-        context.fillStyle = '#FF0000';
+        context.fillStyle = '#E72264';
         context.fillRect(width - 1, val, 1, height - val);
     }
 }

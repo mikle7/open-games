@@ -21,7 +21,7 @@ export const app = new Application<HTMLCanvasElement>({
 addDebugView(app.renderer);
 
 
-measureView.measureFunction( app.ticker, 'update');
+// measureView.measureFunction( app.ticker, 'update');
 
 let hasInteracted = false;
 
