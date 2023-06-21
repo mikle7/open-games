@@ -1,5 +1,5 @@
-import { measure } from './measure';
 import { Graph } from './Graph';
+import { measure } from './measure';
 
 class MeasureView
 {
@@ -63,7 +63,7 @@ class MeasureView
             {
 
                 measureView.label.innerHTML = `${id}: ${measure.measureGetAverage(id)}`;
-                measureView.graph.update(measure.measureGetAverage(id));
+                measureView.graph.update(measure.measureGetAverage(id) * 0.8);
             }
             
         }

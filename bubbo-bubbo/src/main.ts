@@ -3,6 +3,7 @@ import { Application, Assets } from 'pixi.js';
 import { initAssets } from './assets';
 import { audio, bgm } from './audio';
 import { addDebugView } from './debug/addDebugView';
+import { measureView } from './debug/measure-view';
 import { designConfig } from './game/designConfig';
 import { navigation } from './navigation';
 import { GameScreen } from './screens/GameScreen';
@@ -18,6 +19,9 @@ export const app = new Application<HTMLCanvasElement>({
 });
 
 addDebugView(app.renderer);
+
+
+measureView.measureFunction( app.ticker, 'update');
 
 let hasInteracted = false;
 
