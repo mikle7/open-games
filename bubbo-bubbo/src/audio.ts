@@ -24,6 +24,7 @@ class BGM
      */
     public async play(alias: string, options?: PlayOptions)
     {
+        return;
         // Do nothing if the requested music is already being played
         if (this.currentAlias === alias) return;
 
@@ -88,6 +89,7 @@ class SFX
      */
     public play(alias: string, options?: PlayOptions)
     {
+        return;
         const volume = this._volume * (options?.volume ?? 1);
 
         sound.play(alias, { ...options, volume });

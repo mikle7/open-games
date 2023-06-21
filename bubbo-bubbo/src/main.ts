@@ -2,6 +2,7 @@ import { Application, Assets } from 'pixi.js';
 
 import { initAssets } from './assets';
 import { audio, bgm } from './audio';
+import { addDebugView } from './debug/addDebugView';
 import { designConfig } from './game/designConfig';
 import { navigation } from './navigation';
 import { GameScreen } from './screens/GameScreen';
@@ -15,6 +16,8 @@ export const app = new Application<HTMLCanvasElement>({
     resolution: Math.max(window.devicePixelRatio, 2),
     backgroundColor: 0xffffff,
 });
+
+addDebugView(app.renderer);
 
 let hasInteracted = false;
 
