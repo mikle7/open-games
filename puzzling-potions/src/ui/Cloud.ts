@@ -123,6 +123,7 @@ export class Cloud extends Container {
             container.addChild(circle);
             this.circles.push(circle);
         }
+    }
 
     /** Play circles showing up from afar forming the cloud */
     public async playFormAnimation(duration = 1) {
