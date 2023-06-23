@@ -1,4 +1,4 @@
-import { Container, NineSlicePlane, Sprite, Texture } from 'pixi.js';
+import { Cache, Container, NineSlicePlane, Sprite, Texture } from 'pixi.js';
 import gsap from 'gsap';
 import { Label } from '../ui/Label';
 import { i18n } from '../utils/i18n';
@@ -66,11 +66,11 @@ export class ResultScreen extends Container {
 
         this.panel = new Container();
         this.addChild(this.panel);
-
+        
         this.panelBase = Sprite.from('result-base');
         this.panelBase.anchor.set(0.5);
         this.panel.addChild(this.panelBase);
-
+        
         this.title = new Label('', { fill: 0xffffff });
         this.title.y = -160;
         this.panel.addChild(this.title);
@@ -102,13 +102,18 @@ export class ResultScreen extends Container {
         this.stars.y = -10;
         this.panel.addChild(this.stars);
 
+        const texture = Texture.from('rounded-rectangle');
+
+
         this.bottomBase = new NineSlicePlane({
-            texture:Texture.from('rounded-rectangle'),
+            texture,
             leftWidth: 32,
             topHeight: 32,
             rightWidth: 32,
             bottomHeight: 32,
         })
+        
+        this.bottomBase.label = 'bottomBase';
         
         this.bottomBase.tint = 0x2c136c;
         this.bottomBase.height = 200;

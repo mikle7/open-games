@@ -87,6 +87,17 @@ export class Match3Piece extends Container {
         this.area.on('pointerup', this.onPointerUp);
         this.area.on('pointerupoutside', this.onPointerUp);
         this.area.on('pointercancel', this.onPointerUp);
+
+        this.onRender = ()=>{
+  
+            if (this.paused) return;
+            if (this.highlight.visible) {
+                this.highlight.rotation += app.ticker.deltaTime * 0.03;
+                this.image.rotation = Math.sin(app.ticker.lastTime * 0.01) * 0.1;
+            } else {
+                this.image.rotation = 0;
+            } 
+        }
     }
 
     /**
@@ -214,18 +225,6 @@ export class Match3Piece extends Container {
         const duration = 0.2;
         gsap.to(this.scale, { x: 1, y: 1, duration, ease: 'back.out' });
         this.unlock();
-    }
-
-    public updateTransform() {
-        super.updateTransform();
-
-        if (this.paused) return;
-        if (this.highlight.visible) {
-            this.highlight.rotation += app.ticker.deltaTime * 0.03;
-            this.image.rotation = Math.sin(app.ticker.lastTime * 0.01) * 0.1;
-        } else {
-            this.image.rotation = 0;
-        }
     }
 
     /** Resolve and kill all current tweens */

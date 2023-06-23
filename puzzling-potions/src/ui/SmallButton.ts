@@ -48,7 +48,7 @@ export class SmallButton extends FancyButton {
         hoverView.height = opts.height;
 
         const pressedView = new NineSlicePlane({
-            texture:Texture.from('button-small-pres'), 
+            texture:Texture.from('button-small-press'), 
             leftWidth:16, 
             topHeight:16,
             rightWidth:16,
