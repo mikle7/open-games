@@ -1,5 +1,5 @@
 import { FancyButton, Switcher } from '@pixi/ui';
-import { Sprite, Text } from 'pixi.js';
+import { Text } from 'pixi.js';
 
 import { audio, sfx } from '../../audio';
 import { storage } from '../../storage';
@@ -38,12 +38,15 @@ export class AudioSecondaryButton extends FancyButton
         switcher.scale.set(0.95);
         
         // Create text object to act as label
-        const text = new Text(i18n.t('sound'), {
-            fill: 0x000000,
-            fontFamily: 'Bungee Regular',
-            fontWeight: 'bold',
-            align: 'center',
-            fontSize: 40,
+        const text = new Text({
+            text:i18n.t('sound'),
+            style:{
+                fill: 'black',
+                fontFamily: 'Bungee Regular',
+                fontWeight: 'bold',
+                align: 'center',
+                fontSize: 40,
+            },
         });
 
         super({
@@ -70,9 +73,6 @@ export class AudioSecondaryButton extends FancyButton
             // Set initial scale to default scale
             scale:  DEFAULT_SCALE,
         });
-
-        // Tint base asset
-        (this.defaultView as Sprite).tint = 0x49c8ff;
 
         this._switcher = switcher;
     }

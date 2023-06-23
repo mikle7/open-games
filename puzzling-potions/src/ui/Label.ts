@@ -14,7 +14,12 @@ export type LabelOptions = typeof defaultLabelStyle;
 export class Label extends Text {
     constructor(text?: string | number, style?: Partial<ITextStyle> | TextStyle, canvas?: ICanvas) {
         style = { ...defaultLabelStyle, ...style };
-        super(text, style, canvas);
+
+        super({
+            text, 
+            style
+        });
+
         // Label is always centered, but this can be changed in instance afterwards
         this.anchor.set(0.5);
     }

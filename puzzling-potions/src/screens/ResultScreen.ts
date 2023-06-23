@@ -3,7 +3,7 @@ import gsap from 'gsap';
 import { Label } from '../ui/Label';
 import { i18n } from '../utils/i18n';
 import { ResultStars } from '../ui/ResultStars';
-import { Dragon } from '../ui/Dragon';
+//import { Dragon } from '../ui/Dragon';
 import { LargeButton } from '../ui/LargeButton';
 import { GameScreen } from './GameScreen';
 import { navigation } from '../utils/navigation';
@@ -24,7 +24,7 @@ export class ResultScreen extends Container {
     /** The centered box area containing the results */
     private panel: Container;
     /** Animated dragon */
-    private dragon: Dragon;
+    //private dragon: Dragon;
     /** The panel background */
     private panelBase: Sprite;
     /** The screen title */
@@ -58,11 +58,11 @@ export class ResultScreen extends Container {
             ripple: 'icon-settings-stroke',
         });
         this.settingsButton.onPress.connect(() => navigation.presentPopup(SettingsPopup));
-        this.addChild(this.settingsButton);
+        // this.addChild(this.settingsButton);
 
-        this.dragon = new Dragon();
-        this.dragon.playTransition();
-        this.addChild(this.dragon);
+        // this.dragon = new Dragon();
+        // this.dragon.playTransition();
+        // this.addChild(this.dragon);
 
         this.panel = new Container();
         this.addChild(this.panel);
@@ -102,7 +102,14 @@ export class ResultScreen extends Container {
         this.stars.y = -10;
         this.panel.addChild(this.stars);
 
-        this.bottomBase = new NineSlicePlane(Texture.from('rounded-rectangle'), 32, 32, 32, 32);
+        this.bottomBase = new NineSlicePlane({
+            texture:Texture.from('rounded-rectangle'),
+            leftWidth: 32,
+            topHeight: 32,
+            rightWidth: 32,
+            bottomHeight: 32,
+        })
+        
         this.bottomBase.tint = 0x2c136c;
         this.bottomBase.height = 200;
         this.addChild(this.bottomBase);
@@ -119,7 +126,7 @@ export class ResultScreen extends Container {
         this.bottomBase.visible = false;
         this.continueButton.visible = false;
         this.panel.visible = false;
-        this.dragon.visible = false;
+        //this.dragon.visible = false;
         this.score.visible = false;
         this.bestScore.visible = false;
         this.message.hide(false);
@@ -133,8 +140,8 @@ export class ResultScreen extends Container {
 
     /** Resize the screen, fired whenever window size changes */
     public resize(width: number, height: number) {
-        this.dragon.x = width * 0.5 + 20;
-        this.dragon.y = height * 0.5 - 210;
+        // this.dragon.x = width * 0.5 + 20;
+        // this.dragon.y = height * 0.5 - 210;
         this.panel.x = width * 0.5;
         this.panel.y = height * 0.5;
         this.continueButton.x = width * 0.5;
@@ -156,7 +163,7 @@ export class ResultScreen extends Container {
         await waitFor(0.5);
         const mode = userSettings.getGameMode();
         const performance = userStats.load(mode);
-        this.showDragon();
+     //   this.showDragon();
         await this.showPanel();
         this.animateGradeStars(performance.grade);
         await this.animatePoints(performance.score);
@@ -167,7 +174,7 @@ export class ResultScreen extends Container {
     /** Hide screen with animations */
     public async hide() {
         this.hideBottom();
-        await this.hideDragon();
+       // await this.hideDragon();
         await this.hidePanel();
     }
 

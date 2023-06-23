@@ -1,4 +1,4 @@
-import { BlurFilter, Container, Sprite, Texture } from 'pixi.js';
+import { KawaseBlurFilter, Container, Sprite, Texture } from 'pixi.js';
 import { Label } from '../ui/Label';
 import { LargeButton } from '../ui/LargeButton';
 import { RoundedBox } from '../ui/RoundedBox';
@@ -54,7 +54,7 @@ export class PausePopup extends Container {
     /** Present the popup, animated */
     public async show() {
         if (navigation.currentScreen) {
-            navigation.currentScreen.filters = [new BlurFilter(5)];
+            navigation.currentScreen.filters = new KawaseBlurFilter(5)
         }
         gsap.killTweensOf(this.bg);
         gsap.killTweensOf(this.panel.pivot);

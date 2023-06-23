@@ -1,7 +1,7 @@
 import type { ButtonOptions } from '@pixi/ui';
 import { FancyButton } from '@pixi/ui';
 import type { TextStyle } from 'pixi.js';
-import { Sprite, Text } from 'pixi.js';
+import { Text } from 'pixi.js';
 
 import { sfx } from '../../audio';
 import { getAnimations } from './configs/animationConfig';
@@ -36,15 +36,18 @@ export class SecondaryButton extends FancyButton
     constructor(options?: SecondaryButtonOptions)
     {
         // Create text object to act as label
-        const text = new Text(options?.text ?? '', {
+        const text = new Text({
+            text:options?.text ?? '',
+            style:{
             // Predefine text styles that can be overwritten
-            fill: 0x000000,
-            fontFamily: 'Bungee Regular',
-            fontWeight: 'bold',
-            align: 'center',
-            fontSize: 40,
-            // Allow custom text style to overwrite predefined options
-            ...options?.textStyle,
+                fill: 0x000000,
+                fontFamily: 'Bungee Regular',
+                fontWeight: 'bold',
+                align: 'center',
+                fontSize: 40,
+                // Allow custom text style to overwrite predefined options
+                ...options?.textStyle,
+            },
         });
 
         super({
@@ -64,8 +67,8 @@ export class SecondaryButton extends FancyButton
 
         if (options?.tint)
         {
+            this.children[0]?.tint = options.tint;
             // Tint base asset if tint defined in options
-            (this.defaultView as Sprite).tint = options.tint;
         }
     }
 

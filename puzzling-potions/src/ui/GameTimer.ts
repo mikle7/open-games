@@ -13,7 +13,7 @@ export class GameTimer extends Container {
         super();
         this.label = new Label('5:00', {
             fontSize: 36,
-            fill: 0xffffff,
+            fill: 'black',
         });
         this.addChild(this.label);
     }

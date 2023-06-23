@@ -43,18 +43,18 @@ export class GameEffects extends Container {
     constructor(game: GameScreen) {
         super();
         this.game = game;
-        this.sortableChildren = true;
+        // this.sortableChildren = true;
     }
 
     /** Auto-update by overriding Container's updateTransform */
-    public updateTransform() {
-        super.updateTransform();
-        // Update children z indexes to auto organise their order according
-        // to their scales, to create a sort of a "3d depth" simulation
-        for (const child of this.children) {
-            child.zIndex = child.scale.x;
-        }
-    }
+    // public updateTransform() {
+    //     super.updateTransform();
+    //     // Update children z indexes to auto organise their order according
+    //     // to their scales, to create a sort of a "3d depth" simulation
+    //     for (const child of this.children) {
+    //         child.zIndex = child.scale.x;
+    //     }
+    // }
 
     /** Fired when a piece is moved */
     public async onMove(data: Match3OnMoveData) {

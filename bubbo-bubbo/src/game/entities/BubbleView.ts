@@ -110,6 +110,9 @@ export class BubbleView
         // Update the texture of the sprite based on the new type
         this._sprite.texture = Texture.from(`bubble-${this._type}`);
         
+        this._sprite.width = boardConfig.bubbleSize;
+        this._sprite.height = boardConfig.bubbleSize;
+        
         // Update the tint of the shadow based on the new type
         this._shadow.tint = boardConfig.bubbleTypeToColor[value] ?? 0x606060;
         

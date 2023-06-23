@@ -1,5 +1,5 @@
 import gsap from 'gsap';
-import type { IPointData } from 'pixi.js';
+import type { PointData } from 'pixi.js';
 import { Container, Graphics } from 'pixi.js';
 
 import { sfx } from '../../audio';
@@ -88,9 +88,14 @@ export class Bubble extends SpoofBubble
         // Used to debug the visuals of the physics body, only accounts for body radius and centers on bubble view
         if (designConfig.debugBody)
         {
-            this.view.addChild(
-                new Graphics().beginFill(0xffffff, 0.5).drawCircle(0, 0, this.body.radius),
-            );
+            const debugBody = new Graphics();
+
+            debugBody.context
+                .circle(0, 0, this.body.radius)
+                .fill({color:0xFFFFFF, alpha:0.5});
+            
+
+            this.view.addChild(debugBody);
         }
     }
   
@@ -143,7 +148,7 @@ export class Bubble extends SpoofBubble
      * @param direction - The x and y direction of the impact animation.
      * @returns - A gsap animation object.
      */
-    public impact(direction: IPointData)
+    public impact(direction: PointData)
     {
         return gsap.to(this.bubbleView.view, {
             x: direction.x,

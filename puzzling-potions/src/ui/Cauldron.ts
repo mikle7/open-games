@@ -18,7 +18,7 @@ export class Cauldron extends Container {
     /** The optional cauldron shadow, displayed in game screen */
     private shadow: Sprite;
     /** The cauldron spine animation */
-    private spine: Spine;
+    //private spine: Spine;
     /** Optional content attached to the cauldron, that will follow its animation */
     private content?: Container;
 
@@ -38,12 +38,12 @@ export class Cauldron extends Container {
         this.shadow.visible = shadow;
         this.container.addChild(this.shadow);
 
-        const skeleton = Assets.cache.get('preload/cauldron-skeleton.json');
-        this.spine = new Spine(skeleton.spineData);
-        this.spine.autoUpdate = true;
-        this.spine.y = 50;
-        this.spine.state.setAnimation(0, 'animation', true);
-        this.container.addChild(this.spine);
+        // const skeleton = Assets.cache.get('preload/cauldron-skeleton.json');
+        // this.spine = new Spine(skeleton.spineData);
+        // this.spine.autoUpdate = true;
+        // this.spine.y = 50;
+        // this.spine.state.setAnimation(0, 'animation', true);
+        // this.container.addChild(this.spine);
     }
 
     /** Show cauldron */
@@ -100,29 +100,29 @@ export class Cauldron extends Container {
 
     /** Make cauldron do a quick impact wobble */
     public async playWobble() {
-        gsap.killTweensOf(this.spine.scale);
+       // gsap.killTweensOf(this.spine.scale);
         const scaleX = randomRange(1.1, 1.2);
         const scaley = randomRange(0.8, 0.9);
-        await gsap.to(this.spine.scale, { x: scaleX, y: scaley, duration: 0.05, ease: 'linear' });
-        await gsap.to(this.spine.scale, { x: 1, y: 1, duration: 0.8, ease: 'elastic.out' });
+        //await gsap.to(this.spine.scale, { x: scaleX, y: scaley, duration: 0.05, ease: 'linear' });
+        //await gsap.to(this.spine.scale, { x: 1, y: 1, duration: 0.8, ease: 'elastic.out' });
     }
 
     /** Add a sprite to the front of the cauldron that will follow up the spine animation */
     public addContent(content: Container) {
         if (!this.content) this.content = new Container();
-        this.spine.addChild(this.content);
+        this.addChild(this.content);
         this.content.addChild(content);
     }
 
     /** Auto-update by overriding Container's updateTransform */
-    public updateTransform() {
-        super.updateTransform();
-        if (!this.content) return;
-        const bone = this.spine.skeleton.bones[1] as any;
-        this.content.x = bone.ax;
-        this.content.y = -bone.ay - 5;
-        this.content.rotation = bone.arotation * -0.015;
-    }
+    // public updateTransform() {
+    //     super.updateTransform();
+    //     if (!this.content) return;
+    //     const bone = this.spine.skeleton.bones[1] as any;
+    //     this.content.x = bone.ax;
+    //     this.content.y = -bone.ay - 5;
+    //     this.content.rotation = bone.arotation * -0.015;
+    // }
 }
 
 /** A cauldron drop of its inner content, to be played with the splash animation */

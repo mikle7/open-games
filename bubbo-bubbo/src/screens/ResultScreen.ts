@@ -43,23 +43,29 @@ class StatView
     constructor(name: string, width: number)
     {
         // Create stat visuals
-        this._statNameText = new Text(name, {
-            fontSize: 18,
-            fontWeight: '100',
-            fontFamily: 'Opensans Semibold',
-            fill: 0x000000,
-            align: 'left',
+        this._statNameText = new Text({
+            text:name,
+            style:{
+                fontSize: 18,
+                fontWeight: '100',
+                fontFamily: 'Opensans Semibold',
+                fill: 0x000000,
+                align: 'left',
+            },
         });
 
         this._statNameText.anchor.set(0, 0.5);
         this._statNameText.x = -width * 0.5;
         
-        this._statValueText = new Text('1000', {
-            fontSize: 18,
-            fontWeight: '100',
-            fontFamily: 'Opensans Semibold',
-            fill: 0x000000,
-            align: 'right',
+        this._statValueText = new Text({
+            text:'1000',
+            style:{
+                fontSize: 18,
+                fontWeight: '100',
+                fontFamily: 'Opensans Semibold',
+                fill: 0x000000,
+                align: 'right',
+            },
         });
         this._statValueText.x = width * 0.5;
 
@@ -114,12 +120,15 @@ class ResultsPanel
         this._base = Sprite.from('panel-end-screen-base');
         this._base.anchor.set(0.5);
   
-        const titleText = new Text(i18n.t('resultsTitle'), {
-            fontSize: 30,
-            fontWeight: '900',
-            fontFamily: 'Bungee Regular',
-            fill: 0x000000,
-            align: 'center',
+        const titleText = new Text({
+            text:i18n.t('resultsTitle'),
+            style:{
+                fontSize: 30,
+                fontWeight: '900',
+                fontFamily: 'Bungee Regular',
+                fill: 0x000000,
+                align: 'center',
+            },
         });
   
         titleText.anchor.set(0.5);
@@ -189,12 +198,15 @@ class ResultsPanel
         breakdownPanel.anchor.set(0.5);
         breakdownPanel.y = 15;
 
-        const breakdownTitleText = new Text(i18n.t('resultsBreakdownTitle'), {
-            fontSize: 16,
-            fontWeight: '900',
-            fontFamily: 'Bungee Regular',
-            fill: 0x000000,
-            align: 'center',
+        const breakdownTitleText = new Text({
+            text:i18n.t('resultsBreakdownTitle'),
+            style:{
+                fontSize: 16,
+                fontWeight: '900',
+                fontFamily: 'Bungee Regular',
+                fill: 0x000000,
+                align: 'center',
+            },
         });
 
         breakdownPanel.alpha = 0.4;
@@ -258,24 +270,30 @@ class ResultsPanel
         informationContainer.y = options.yOffset;
 
         // Create subpanel title text
-        const scoreTitleText = new Text(options.title, {
-            fontSize: 22,
-            fontWeight: '900',
-            fontFamily: 'Bungee Regular',
-            fill: 0x000000,
-            align: 'center',
+        const scoreTitleText = new Text({
+            text:options.title,
+            style: {
+                fontSize: 22,
+                fontWeight: '900',
+                fontFamily: 'Bungee Regular',
+                fill: 0x000000,
+                align: 'center',
+            },
         });
 
         scoreTitleText.anchor.set(0.5);
         scoreTitleText.y = -(panel.height * 0.5) + (scoreTitleText.height * 0.5) + 3;
 
         // Create subpanel value text
-        const scoreText = new Text('', {
-            fontSize: 50,
-            fontWeight: '900',
-            fontFamily: 'Bungee Regular',
-            fill: 0x000000,
-            align: 'center',
+        const scoreText = new Text({
+            text:'',
+            style:{
+                fontSize: 50,
+                fontWeight: '900',
+                fontFamily: 'Bungee Regular',
+                fill: 0x000000,
+                align: 'center',
+            },
         });
 
         scoreText.anchor.set(0.5);
@@ -310,7 +328,12 @@ export class ResultScreen extends Container implements AppScreen
         super();
 
         // Create the background
-        this._background = new TilingSprite(Texture.from('background-tile'), 64, 64);
+        this._background = new TilingSprite({
+            texture:Texture.from('background-tile'),
+            width: 64,
+            height:64,
+        });
+
         this._background.tileScale.set(designConfig.backgroundTileScale);
 
         this.addChild(this._background);
@@ -402,9 +425,11 @@ export class ResultScreen extends Container implements AppScreen
         this._porthole = new Porthole();
         this.addChild(this._porthole.view);
 
-        this._footer = new Graphics()
-            .beginFill(boardConfig.bubbleTypeToColor[randomType()])
-            .drawEllipse(0, 0, 300, 125);
+        this._footer = new Graphics();
+        this._footer.context
+            .ellipse(0, 0, 300,  125)
+            .fill(boardConfig.bubbleTypeToColor[randomType()]);
+
         this.addChild(this._footer);
     }
 

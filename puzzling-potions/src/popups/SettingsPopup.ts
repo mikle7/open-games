@@ -1,4 +1,4 @@
-import { BlurFilter, Container, Sprite, Texture } from 'pixi.js';
+import { KawaseBlurFilter, Container, Sprite, Texture } from 'pixi.js';
 import { Label } from '../ui/Label';
 import { LargeButton } from '../ui/LargeButton';
 import { RoundedBox } from '../ui/RoundedBox';
@@ -67,7 +67,7 @@ export class SettingsPopup extends Container {
         this.versionLabel.y = this.panelBase.boxHeight * 0.5 - 15;
         this.panel.addChild(this.versionLabel);
 
-        this.layout = new Layout({ type: 'vertical', elementsMargin: 4 });
+        this.layout = new Container();//Layout({ type: 'vertical', elementsMargin: 4 });
         this.layout.x = -140;
         this.layout.y = -160;
         this.panel.addChild(this.layout);
@@ -122,7 +122,7 @@ export class SettingsPopup extends Container {
     /** Present the popup, animated */
     public async show() {
         if (navigation.currentScreen) {
-            navigation.currentScreen.filters = [new BlurFilter(5)];
+            navigation.currentScreen.filters = [new KawaseBlurFilter(5)];
         }
         gsap.killTweensOf(this.bg);
         gsap.killTweensOf(this.panel.pivot);

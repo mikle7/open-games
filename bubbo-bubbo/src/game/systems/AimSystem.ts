@@ -1,5 +1,5 @@
 import gsap from 'gsap';
-import { Container, IPointData, Point, Sprite } from 'pixi.js';
+import { Container, Point, PointData, Sprite } from 'pixi.js';
 
 import { boardConfig } from '../boardConfig';
 import { designConfig } from '../designConfig';
@@ -55,7 +55,7 @@ export class AimSystem implements System
     /* The container instance that is the root of all visuals in this class. */
     public view = new Container();
     /* The container instance specifically stored the visual nodes. */
-    public nodeContainer = new Container();
+    public nodeContainer = new Container({ layer: true});
 
     /** An array of lines that make up the aiming trajectory. */
     private readonly _aimLines: Line[] = [];
@@ -316,7 +316,7 @@ export class AimSystem implements System
             const n = Math.ceil(distance / stepSize); // rounding up
             
             // Initialise an array to hold the new points
-            const points: IPointData[] = [];
+            const points: PointData[] = [];
             
             // Calculate the step values for x and y
             const stepX = (end.x - start.x) / n;

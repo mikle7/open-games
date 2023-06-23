@@ -1,5 +1,4 @@
 import gsap from 'gsap';
-import type { DisplayObject } from 'pixi.js';
 import { Container, Rectangle } from 'pixi.js';
 
 import { navigation } from '../navigation';
@@ -58,7 +57,7 @@ export class Game
      * Adds `DisplayObject`s to the game container.
      * @param displayObjects - The `DisplayObject`s to add to the game container.
      */
-    public addToGame(...displayObjects: DisplayObject[])
+    public addToGame(...displayObjects: Container[])
     {
         displayObjects.forEach((displayObject) =>
         {
@@ -70,7 +69,7 @@ export class Game
      * Removes `DisplayObject`s from the game container.
      * @param displayObjects - The `DisplayObject`s to remove from the game container.
     */
-    public removeFromGame(...displayObjects: DisplayObject[])
+    public removeFromGame(...displayObjects: Container[])
     {
         displayObjects.forEach((displayObject) =>
         {

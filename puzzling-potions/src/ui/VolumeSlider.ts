@@ -1,5 +1,5 @@
 import { Slider } from '@pixi/ui';
-import { Graphics } from '@pixi/graphics';
+import { Graphics, GraphicsContext } from 'pixi.js';
 import { Label } from './Label';
 
 /**
@@ -21,24 +21,26 @@ export class VolumeSlider extends Slider {
         const borderColor = 0xcf4b00;
         const backgroundColor = 0xcf4b00;
 
-        const bg = new Graphics()
-            .beginFill(borderColor)
-            .drawRoundedRect(0, 0, width, height, radius)
-            .beginFill(backgroundColor)
-            .drawRoundedRect(border, border, width - border * 2, height - border * 2, radius);
+        const bg = new Graphics(new GraphicsContext()
+            .roundRect(0, 0, width, height, radius)
+            .fill(borderColor)
+            .roundRect(border, border, width - border * 2, height - border * 2, radius)
+            .fill(backgroundColor)
+        )
+        
+        const fill = new Graphics(new GraphicsContext()
+            .roundRect(0, 0, width, height, radius)
+            .fill(borderColor)
+            .roundRect(border, border, width - border * 2, height - border * 2, radius)
+            .fill(fillColor)
+        )
 
-        const fill = new Graphics()
-            .beginFill(borderColor)
-            .drawRoundedRect(0, 0, width, height, radius)
-            .beginFill(fillColor)
-            .drawRoundedRect(border, border, width - border * 2, height - border * 2, radius);
-
-        const slider = new Graphics()
-            .beginFill(borderColor)
-            .drawCircle(0, 0, handleRadius + handleBorder)
-            .beginFill(meshColor)
-            .drawCircle(0, 0, handleRadius)
-            .endFill();
+        const slider = new Graphics(new GraphicsContext()
+            .circle(0, 0, handleRadius + handleBorder)
+            .fill(borderColor)
+            .circle(0, 0, handleRadius)
+            .fill(meshColor)
+        )
 
         super({
             bg,

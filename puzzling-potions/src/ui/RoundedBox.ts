@@ -22,8 +22,19 @@ export class RoundedBox extends Container {
 
     constructor(options: Partial<RoundedBoxOptions> = {}) {
         super();
+       
+       
         const opts = { ...defaultRoundedBoxOptions, ...options };
-        this.image = new NineSlicePlane(Texture.from('rounded-rectangle'), 34, 34, 34, 34);
+        
+        const nineSliceOptions = {
+            texture:Texture.from('rounded-rectangle'),
+            leftWidth:34,
+            topHeight:34,
+            rightWidth:34,
+            bottomHeight:34
+        }
+
+        this.image = new NineSlicePlane(nineSliceOptions);
         this.image.width = opts.width;
         this.image.height = opts.height;
         this.image.tint = opts.color;
@@ -32,7 +43,7 @@ export class RoundedBox extends Container {
         this.addChild(this.image);
 
         if (opts.shadow) {
-            this.shadow = new NineSlicePlane(Texture.from('rounded-rectangle'), 34, 34, 34, 34);
+            this.shadow = new NineSlicePlane(nineSliceOptions);      
             this.shadow.width = opts.width;
             this.shadow.height = opts.height;
             this.shadow.tint = opts.shadowColor;

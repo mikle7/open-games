@@ -1,5 +1,5 @@
 import gsap from 'gsap';
-import { Container, Graphics, Texture, TilingSprite } from 'pixi.js';
+import { Container, Graphics, GraphicsContext, Texture, TilingSprite } from 'pixi.js';
 
 import { randomType } from '../game/boardConfig';
 import { BubbleView } from '../game/entities/BubbleView';
@@ -58,14 +58,17 @@ export class Porthole
         options = { ...Porthole.DEFAULT_OPTIONS, ...options };
 
         // Create the frame of the porthole
-        this._frame = new Graphics()
-            .beginFill(options.frameColor)  // set the color of the frame
-            .drawCircle(0, 0, options.size + options.frameWidth);  // draw the frame as a circle
+        this._frame = new Graphics();
+        this._frame.context
+            .circle(0, 0, options.size + options.frameWidth)  // draw the frame as a circle
+            .fill(options.frameColor); // set the color of the frame
+
         
+   
         this.view.addChild(this._frame);
 
         // Create the tiling sprite for the background
-        this._background = new TilingSprite(Texture.from('background-tile-space'), 64, 64);
+        this._background = new TilingSprite({texture:Texture.from('background-tile-space'), width:64, height:64});
         this._background.anchor.set(0.5);
         
         // Set the width and height of the background to be equal to the size of the porthole
@@ -73,7 +76,12 @@ export class Porthole
         this._frame.addChild(this._background);
 
         // create the mask for shaping the background
-        this._mask = new Graphics().beginFill(options.frameColor).drawCircle(0, 0, options.size);
+        this._mask = new Graphics(
+            new GraphicsContext()
+                .circle(0, 0, options.size)
+                .fill(options.frameColor),
+        );
+        
         this._background.mask = this._mask;    // set the mask for the background
         this.view.addChild(this._mask);   // add the mask to the view
 

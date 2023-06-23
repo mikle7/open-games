@@ -41,7 +41,7 @@ export class MaskTransition {
         // Update layers
         app.stage.addChildAt(this.base, 0);
         app.stage.addChildAt(this.cauldron, 0);
-        this.cauldron.updateTransform();
+//        this.cauldron.updateTransform();
 
         // Play animation
         navigation.container.mask = this.cauldron;
@@ -68,7 +68,7 @@ export class MaskTransition {
         // Update layers
         app.stage.addChildAt(this.base, 0);
         app.stage.addChildAt(this.cauldron, 0);
-        this.cauldron.updateTransform();
+       // this.cauldron.updateTransform();
 
         // Play animation
         navigation.container.mask = this.cauldron;

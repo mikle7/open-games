@@ -2,6 +2,7 @@ import { Application, Assets } from 'pixi.js';
 
 import { initAssets } from './assets';
 import { audio, bgm } from './audio';
+import { addDebugView } from './debug/addDebugView';
 import { designConfig } from './game/designConfig';
 import { navigation } from './navigation';
 import { GameScreen } from './screens/GameScreen';
@@ -10,11 +11,10 @@ import { TitleScreen } from './screens/TitleScreen';
 import { storage } from './storage';
 import { getUrlParam } from './utils/utils';
 
-/** The PixiJS app Application instance, shared across the project */
-export const app = new Application<HTMLCanvasElement>({
-    resolution: Math.max(window.devicePixelRatio, 2),
-    backgroundColor: 0xffffff,
-});
+
+export const app = new Application<HTMLCanvasElement>();
+
+
 
 let hasInteracted = false;
 
@@ -34,8 +34,8 @@ function resize()
     const height = windowHeight * scale;
 
     // Update canvas style dimensions and scroll window up to avoid issues on mobile resize
-    app.renderer.view.style.width = `${windowWidth}px`;
-    app.renderer.view.style.height = `${windowHeight}px`;
+    app.renderer.view.element.style.width = `${windowWidth}px`;
+    app.renderer.view.element.style.height = `${windowHeight}px`;
     window.scrollTo(0, 0);
 
     // Update renderer  and navigation screens dimensions
@@ -47,9 +47,22 @@ function resize()
 /** Setup app and initialise assets */
 async function init()
 {
+    await app.init({
+        resolution: Math.max(window.devicePixelRatio, 2),
+        backgroundColor: 0xffffff,
+    });
+    
     // Add pixi canvas element (app.view) to the document's body
-    document.body.appendChild(app.view);
+    document.body.appendChild(app.canvas);
 
+    app.stage.layer = true;
+
+    // app.ticker.stop();
+    // measureView.measureNumber(app.stage.layerGroup, ['structureDidChange']);
+    // app.ticker.start();
+
+    addDebugView(app.renderer);
+    
     // Whenever the window resizes, call the 'resize' function
     window.addEventListener('resize', resize);
 

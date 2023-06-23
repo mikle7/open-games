@@ -130,13 +130,16 @@ export class HudSystem implements System
         this._pauseButton.y = -designConfig.content.height + 37;
 
         // Create a mask and fit it to the game bounds
-        this._mask = new Graphics().beginFill(0x030320).drawRect(
-            -designConfig.content.width * 0.5,
-            -designConfig.content.height,
-            designConfig.content.width,
-            designConfig.content.height,
-        );
-
+        this._mask = new Graphics();
+        this._mask.context
+            .rect(
+                -designConfig.content.width * 0.5,
+                -designConfig.content.height,
+                designConfig.content.width,
+                designConfig.content.height,
+            )
+            .fill(0x030320);
+        
         // Create the tutorial popout
         this._helperPanel = new HelperPanel();
         this._helperPanel.view.y = -(designConfig.content.height) + 200;

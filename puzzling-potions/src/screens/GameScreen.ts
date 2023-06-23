@@ -1,4 +1,4 @@
-import { Container } from 'pixi.js';
+import { Container, logScene } from 'pixi.js';
 import gsap from 'gsap';
 import { Match3, Match3OnMatchData, Match3OnMoveData, Match3OnPopData } from '../match3/Match3';
 import { Shelf } from '../ui/Shelf';
@@ -10,7 +10,7 @@ import { GameScore } from '../ui/GameScore';
 import { CloudLabel } from '../ui/CloudLabel';
 import { i18n } from '../utils/i18n';
 import { Cauldron } from '../ui/Cauldron';
-import { RippleButton } from '../ui/RippleButton';
+//import { RippleButton } from '../ui/RippleButton';
 import { SettingsPopup } from '../popups/SettingsPopup';
 import { PausePopup } from '../popups/PausePopup';
 import { GameCountdown } from '../ui/GameCountdown';
@@ -23,6 +23,9 @@ import { app } from '../main';
 import { waitFor } from '../utils/asyncUtils';
 import { match3GetConfig, Match3Mode } from '../match3/Match3Config';
 import { userStats } from '../utils/userStats';
+import { RippleButton } from '../ui/RippleButton';
+
+let tick = 0;
 
 /** The screen tha holds the Match3 game */
 export class GameScreen extends Container {
@@ -55,7 +58,7 @@ export class GameScreen extends Container {
     /** The match3 book shelf background */
     public readonly shelf?: Shelf;
     /** The special effects layer for the match3 */
-    public readonly effects?: GameEffects;
+    public readonly specialEffects?: GameEffects;
     /** Set to true when gameplay is finished */
     private finished = false;
 
@@ -74,7 +77,7 @@ export class GameScreen extends Container {
             ripple: 'icon-settings-stroke',
         });
         this.settingsButton.onPress.connect(() => navigation.presentPopup(SettingsPopup));
-        this.addChild(this.settingsButton);
+        // this.addChild(this.settingsButton);
 
         this.gameContainer = new Container();
         this.addChild(this.gameContainer);
@@ -109,8 +112,8 @@ export class GameScreen extends Container {
         this.timer = new GameTimer();
         this.cauldron.addContent(this.timer);
 
-        this.effects = new GameEffects(this);
-        this.addChild(this.effects);
+        this.specialEffects = new GameEffects(this);
+        this.addChild(this.specialEffects);
 
         this.countdown = new GameCountdown();
         this.addChild(this.countdown);
@@ -213,7 +216,7 @@ export class GameScreen extends Container {
     /** Hide screen with animations */
     public async hide() {
         this.overtime.hide();
-        this.effects?.playGridExplosion();
+        this.specialEffects?.playGridExplosion();
         await waitFor(0.3);
         await this.timesUp.playRevealAnimation();
         await this.timesUp.playExpandAnimation();
@@ -221,7 +224,7 @@ export class GameScreen extends Container {
 
     /** Fired when the player moves a piece */
     private onMove(data: Match3OnMoveData) {
-        this.effects?.onMove(data);
+        this.specialEffects?.onMove(data);
     }
 
     /** Fired when match3 detects one or more matches in the grid */
@@ -232,12 +235,12 @@ export class GameScreen extends Container {
             this.comboLevel.text = 'x' + data.combo;
         }
 
-        this.effects?.onMatch(data);
+        this.specialEffects?.onMatch(data);
     }
 
     /** Fired when a piece is poped out fro the board */
     private onPop(data: Match3OnPopData) {
-        this.effects?.onPop(data);
+        this.specialEffects?.onPop(data);
     }
 
     /** Fires when the match3 grid finishes auto-processing */

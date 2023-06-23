@@ -46,6 +46,15 @@ export class Cloud extends Container {
 
         this.width = this.options.width;
         this.height = this.options.height;
+
+        this.onRender = ( )=>{
+            
+            const delta = app.ticker.deltaTime;
+            for (const circle of this.circles) {
+                circle.update(delta);
+            }
+            
+        }
     }
 
     /** Get cloud width from its base, not visible area */
@@ -114,16 +123,6 @@ export class Cloud extends Container {
             container.addChild(circle);
             this.circles.push(circle);
         }
-    }
-
-    /** Auto-update by overriding Container's updateTransform */
-    public updateTransform() {
-        super.updateTransform();
-        const delta = app.ticker.deltaTime;
-        for (const circle of this.circles) {
-            circle.update(delta);
-        }
-    }
 
     /** Play circles showing up from afar forming the cloud */
     public async playFormAnimation(duration = 1) {

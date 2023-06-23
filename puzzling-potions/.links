@@ -1,0 +1,6 @@
+[
+  {
+      "location": "../../../playco/tools/pixijs/lib",
+      "target": "./src/pixi-v8"
+  }
+]

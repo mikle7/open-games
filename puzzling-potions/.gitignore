@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 
+src/pixi-ui
+src/pixi-v8
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

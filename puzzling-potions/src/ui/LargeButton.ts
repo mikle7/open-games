@@ -22,15 +22,37 @@ export class LargeButton extends FancyButton {
     constructor(options: Partial<LargeButtonOptions> = {}) {
         const opts = { ...defaultLargeButtonOptions, ...options };
 
-        const defaultView = new NineSlicePlane(Texture.from('button-large'), 36, 42, 36, 52);
+        const defaultView = new NineSlicePlane({
+                texture:Texture.from('button-large'), 
+                leftWidth:36, 
+                topHeight:42, 
+                rightWidth:36, 
+                bottomHeight:52
+        });
+
         defaultView.width = opts.width;
         defaultView.height = opts.height;
 
-        const hoverView = new NineSlicePlane(Texture.from('button-large-hover'), 36, 42, 36, 52);
+        const hoverView = new NineSlicePlane({
+                texture: Texture.from('button-large-hover'), 
+                leftWidth:36, 
+                topHeight:42, 
+                rightWidth:36, 
+                bottomHeight:52
+        });
+        
+        new NineSlicePlane(Texture.from('button-large-hover'), 36, 42, 36, 52);
         hoverView.width = opts.width;
         hoverView.height = opts.height;
 
-        const pressedView = new NineSlicePlane(Texture.from('button-large-press'), 36, 42, 36, 52);
+        const pressedView = new NineSlicePlane({
+            texture: Texture.from('button-large-press'), 
+            leftWidth:36, 
+            topHeight:42, 
+            rightWidth:36, 
+            bottomHeight:52
+        });
+    
         pressedView.width = opts.width;
         pressedView.height = opts.height;
 

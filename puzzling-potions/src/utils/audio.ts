@@ -16,6 +16,9 @@ class BGM {
 
     /** Play a background music, fading out and stopping the previous, if there is one */
     public async play(alias: string, options?: PlayOptions) {
+
+        return;
+
         // Do nothing if the requested music is already being played
         if (this.currentAlias === alias) return;
 
@@ -63,7 +66,10 @@ class SFX {
 
     /** Play an one-shot sound effect */
     public play(alias: string, options?: PlayOptions) {
+
+        return;
         const volume = this.volume * (options?.volume ?? 1);
+        // TODO - re-enable sound effects when v8 launched
         sound.play(alias, { ...options, volume });
     }
 

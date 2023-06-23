@@ -1,4 +1,4 @@
-import { Container, NineSlicePlane, Texture } from 'pixi.js';
+import { Container, Sprite, Texture , NineSlicePlane} from 'pixi.js';
 import { navigation } from '../utils/navigation';
 import { GameScreen } from './GameScreen';
 import gsap from 'gsap';
@@ -27,7 +27,7 @@ export class HomeScreen extends Container {
     /** The game logo */
     private logo: Logo;
     /** Animated dragon */
-    private dragon: Dragon;
+   // private dragon: Dragon;
     /** Button that leads to gameplay */
     private playButton: LargeButton;
     /** Button that links to the Github project */
@@ -47,11 +47,18 @@ export class HomeScreen extends Container {
         this.logo = new Logo();
         this.addChild(this.logo);
 
-        this.dragon = new Dragon();
-        this.dragon.playIdle();
-        this.addChild(this.dragon);
+        // this.dragon = new Dragon();
+        // this.dragon.playIdle();
+        // this.addChild(this.dragon);
 
-        this.base = new NineSlicePlane(Texture.from('rounded-rectangle'), 32, 32, 32, 32);
+        this.base = new NineSlicePlane({
+            texture:Texture.from('rounded-rectangle'),
+            leftWidth:32, 
+            topHeight:32, 
+            rightWidth:32, 
+            bottomHeight:32
+        });
+        
         this.base.tint = 0x2c136c;
         this.addChild(this.base);
 
@@ -67,7 +74,7 @@ export class HomeScreen extends Container {
             ripple: 'icon-settings-stroke',
         });
         this.settingsButton.onPress.connect(() => navigation.presentPopup(SettingsPopup));
-        this.addChild(this.settingsButton);
+     //   this.addChild(this.settingsButton);
 
         this.githubButton = new SmallButton({ text: i18n.githubButton });
         this.githubButton.onPress.connect(() => window.open(i18n.urlGithub, 'blank'));
@@ -84,8 +91,8 @@ export class HomeScreen extends Container {
 
     /** Resize the screen, fired whenever window size changes  */
     public resize(width: number, height: number) {
-        this.dragon.x = width * 0.5;
-        this.dragon.y = height * 0.5;
+        // this.dragon.x = width * 0.5;
+        // this.dragon.y = height * 0.5;
         this.playButton.x = width * 0.5;
         this.playButton.y = height - 130;
         this.base.width = width;
@@ -104,7 +111,7 @@ export class HomeScreen extends Container {
 
     /** Show screen with animations */
     public async show() {
-        bgm.play('common/bgm-main.mp3', { volume: 0.7 });
+        //bgm.play('common/bgm-main.mp3', { volume: 0.7 });
 
         // Reset visual state, hide things that will show up later
         this.playButton.hide(false);
@@ -112,7 +119,7 @@ export class HomeScreen extends Container {
         this.infoButton.hide(false);
         this.settingsButton.hide(false);
         this.githubButton.hide(false);
-        this.dragon.show(false);
+       // this.dragon.show(false);
         this.logo.show(false);
 
         // Play reveal animation
@@ -139,7 +146,7 @@ export class HomeScreen extends Container {
         await waitFor(0.1);
         this.logo.hide();
         await waitFor(0.1);
-        await this.dragon.hide();
+        // await this.dragon.hide();
     }
 
     /** Animation for revealing the screen behind the purple sprite */

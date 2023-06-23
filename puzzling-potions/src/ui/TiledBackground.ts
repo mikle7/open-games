@@ -13,13 +13,21 @@ export class TiledBackground extends Container {
     constructor() {
         super();
 
-        this.sprite = new TilingSprite(
-            Texture.from('background'),
-            app.screen.width,
-            app.screen.height,
-        );
+        this.sprite = new TilingSprite({
+            texture: Texture.from('background'),
+            width:app.renderer.width,
+            height:app.renderer.height,
+        });
         this.sprite.tileTransform.rotation = this.direction;
         this.addChild(this.sprite);
+
+        this.onRender = ()=>{
+          
+            const delta = app.ticker.deltaTime;
+            this.sprite.tilePosition.x -= Math.sin(-this.direction) * delta;
+            this.sprite.tilePosition.y -= Math.cos(-this.direction) * delta;
+
+        }
     }
 
     /** Get the sprite width */
@@ -42,13 +50,6 @@ export class TiledBackground extends Container {
         this.sprite.height = value;
     }
 
-    /** Auto-update by overriding Container's updateTransform */
-    public updateTransform() {
-        super.updateTransform();
-        const delta = app.ticker.deltaTime;
-        this.sprite.tilePosition.x -= Math.sin(-this.direction) * delta;
-        this.sprite.tilePosition.y -= Math.cos(-this.direction) * delta;
-    }
 
     /** Resize the background, fired whenever window size changes  */
     public resize(width: number, height: number) {

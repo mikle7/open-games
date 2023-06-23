@@ -25,6 +25,14 @@ export class SmokeCloud extends Container {
 
         this.circlesContainer = new Container();
         this.addChild(this.circlesContainer);
+        
+        /** Auto-update by overriding Container's updateTransform */
+        this.onRender = ()=>{
+            const delta = app.ticker.deltaTime;
+            for (const circle of this.circles) {
+                circle.update(delta);
+            }
+        }
     }
 
     /** Get base width - the visible with is a bit larger */
@@ -89,14 +97,6 @@ export class SmokeCloud extends Container {
         }
     }
 
-    /** Auto-update by overriding Container's updateTransform */
-    public updateTransform() {
-        super.updateTransform();
-        const delta = app.ticker.deltaTime;
-        for (const circle of this.circles) {
-            circle.update(delta);
-        }
-    }
 }
 
 /**
