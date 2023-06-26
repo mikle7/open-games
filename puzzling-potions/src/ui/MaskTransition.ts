@@ -15,7 +15,7 @@ export class MaskTransition {
 
     constructor() {
         this.base = Sprite.from(Texture.WHITE);
-        this.base.tint = 0x0a0025;
+        this.base.tint = 0x2c136c;
 
         this.cauldron = Sprite.from('white-cauldron');
         this.cauldron.anchor.set(0.5);
@@ -61,15 +61,14 @@ export class MaskTransition {
         const duration = 0.7;
 
         this.resize();
-        this.cauldron.scale.set(0);
+        this.cauldron.scale.set(0.001);
         this.cauldron.rotation = -0.5;
         this.cauldron.alpha = 0.5;
 
         // Update layers
         app.stage.addChildAt(this.base, 0);
         app.stage.addChildAt(this.cauldron, 0);
-       // this.cauldron.updateTransform();
-
+       
         // Play animation
         navigation.container.mask = this.cauldron;
         navigation.container.interactiveChildren = false;
