@@ -3,27 +3,20 @@
         "browser": true,
         "es2021": true
     },
-    "extends": [
-        "eslint:recommended",
-        "plugin:@typescript-eslint/recommended"
-    ],
-    "overrides": [
-    ],
+    "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
+    "overrides": [],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
         "ecmaVersion": "latest",
         "sourceType": "module"
     },
-    "plugins": [
-        "@typescript-eslint",
-        "simple-import-sort"
-    ],
+    "plugins": ["@typescript-eslint", "simple-import-sort"],
     "rules": {
         "@typescript-eslint/no-explicit-any": "off",
         "@typescript-eslint/no-non-null-assertion": "off",
         "comma-dangle": ["error", "always-multiline"],
         "no-cond-assign": ["error", "except-parens"],
-        "no-console": ["error", { "allow": ["warn", "error"] }],
+        // "no-console": ["error", { "allow": ["warn", "error"] }],
         "@typescript-eslint/explicit-member-accessibility": [
             "error",
             {
@@ -40,7 +33,7 @@
         "array-callback-return": "error",
         "block-scoped-var": "error",
         "consistent-return": "error",
-        "curly": ["error", "multi-line"],
+        // "curly": ["error", "multi-line"],
         "dot-location": ["error", "property"],
         "dot-notation": "error",
         "eqeqeq": "error",
@@ -54,7 +47,10 @@
         "no-extend-native": "error",
         "no-extra-bind": "error",
         "no-extra-label": "error",
-        "no-implicit-coercion": ["error", { "boolean": false, "number": true, "string": true, "allow": [] }],
+        "no-implicit-coercion": [
+            "error",
+            { "boolean": false, "number": true, "string": true, "allow": [] }
+        ],
         "no-implicit-globals": "error",
         "no-implied-eval": "error",
         "no-iterator": "error",
@@ -83,14 +79,18 @@
         "no-restricted-globals": "error",
         "no-undef-init": "error",
         "no-use-before-define": ["error", "nofunc"],
-        "simple-import-sort/imports": "error",
-        "simple-import-sort/exports": "error",
-        "brace-style": ["error", "allman"],
+        // "simple-import-sort/imports": "error",
+        // "simple-import-sort/exports": "error",
+        // "brace-style": ["error", "allman"],
         "camelcase": ["error", { "properties": "always" }],
         "comma-spacing": ["error", { "before": false, "after": true }],
         "func-names": ["error", "always"],
         "func-style": ["error", "declaration", { "allowArrowFunctions": true }],
-        "indent": ["error", 4, { "SwitchCase": 1, "VariableDeclarator": { "var": 1, "let": 1, "const": 1 } }],
+        // "indent": [
+        //     "error",
+        //     4,
+        //     { "SwitchCase": 1, "VariableDeclarator": { "var": 1, "let": 1, "const": 1 } }
+        // ],
         "max-depth": ["error", 6],
         "max-len": ["error", { "code": 125, "tabWidth": 4, "comments": 200 }],
         "max-nested-callbacks": ["error", { "max": 5 }],
@@ -100,8 +100,8 @@
         "padding-line-between-statements": [
             "error",
             { "blankLine": "always", "prev": "*", "next": "return" },
-            { "blankLine": "always", "prev": ["const", "let", "var"], "next": "*"},
-            { "blankLine": "any",    "prev": ["const", "let", "var"], "next": ["const", "let", "var"]}
+            { "blankLine": "always", "prev": ["const", "let", "var"], "next": "*" },
+            { "blankLine": "any", "prev": ["const", "let", "var"], "next": ["const", "let", "var"] }
         ],
         "no-array-constructor": "error",
         "no-lonely-if": "error",
@@ -109,7 +109,13 @@
         "lines-between-class-members": ["error", "always", { "exceptAfterSingleLine": true }],
         "no-nested-ternary": "error",
         "no-new-object": "error",
-        "no-restricted-syntax": ["error", "DebuggerStatement", "EmptyStatement", "LabeledStatement", "WithStatement"],
+        "no-restricted-syntax": [
+            "error",
+            "DebuggerStatement",
+            "EmptyStatement",
+            "LabeledStatement",
+            "WithStatement"
+        ],
         "no-unneeded-ternary": "error",
         "one-var": ["error", "never"],
         "quotes": ["error", "single", { "allowTemplateLiterals": true }],
