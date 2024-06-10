@@ -9,8 +9,7 @@ import { getAnimations } from './configs/animationConfig';
 /**
  * Options for the secondary button.
  */
-export interface SecondaryButtonOptions
-{
+export interface SecondaryButtonOptions {
     /** The text displayed on the button. */
     text: string;
     /** The tint color applied to the button. */
@@ -28,23 +27,24 @@ const DEFAULT_SCALE = 0.75;
  *
  * Uses elements from @pixi/ui.
  */
-export class SecondaryButton extends FancyButton
-{
+export class SecondaryButton extends FancyButton {
     /**
      * @param options - Options for the secondary button.
      */
-    constructor(options?: SecondaryButtonOptions)
-    {
+    constructor(options?: SecondaryButtonOptions) {
         // Create text object to act as label
-        const text = new Text(options?.text ?? '', {
-            // Predefine text styles that can be overwritten
-            fill: 0x000000,
-            fontFamily: 'Bungee Regular',
-            fontWeight: 'bold',
-            align: 'center',
-            fontSize: 40,
-            // Allow custom text style to overwrite predefined options
-            ...options?.textStyle,
+        const text = new Text({
+            text: options?.text ?? '',
+            style: {
+                // Predefine text styles that can be overwritten
+                fill: 0x000000,
+                fontFamily: 'Bungee Regular',
+                fontWeight: 'bold',
+                align: 'center',
+                fontSize: 40,
+                // Allow custom text style to overwrite predefined options
+                ...options?.textStyle,
+            },
         });
 
         super({
@@ -62,21 +62,10 @@ export class SecondaryButton extends FancyButton
             ...options?.buttonOptions,
         });
 
-        if (options?.tint)
-        {
+        if (options?.tint) {
             // Tint base asset if tint defined in options
             (this.defaultView as Sprite).tint = options.tint;
         }
-    }
-
-    /**
-     * Override function for the FancyButton, called when button is pressed
-     */
-    public override press()
-    {
-        // Since this is a common button, all button responses are done outside of this class
-
-        // Play audio
-        sfx.play('audio/secondary-button-press.wav');
+        this.onPress.connect(() => sfx.play('audio/secondary-button-press.wav'));
     }
 }

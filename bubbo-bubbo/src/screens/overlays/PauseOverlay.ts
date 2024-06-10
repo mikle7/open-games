@@ -8,77 +8,80 @@ import { SecondaryButton } from '../../ui/buttons/SecondaryButton';
 import { i18n } from '../../utils/i18n';
 
 /** The main pause panel. Separated for cleaner code. */
-class PausePanel
-{
+class PausePanel {
     /** The Container instance which contains all the visual elements for this class. */
-    public view = new Container;
+    public view = new Container();
 
     private readonly _base: Sprite;
     private readonly _titleText: Text;
     private readonly _scoreTitleText: Text;
     private readonly _scoreText: Text;
 
-    constructor()
-    {
+    constructor() {
         // Create the visuals of the panel
         this._base = Sprite.from('images/pause-overlay/pause-panel.png');
         this._base.anchor.set(0.5);
         this.view.addChild(this._base);
 
-        this._titleText = new Text(i18n.t('paused'), {
-            fontSize: 30,
-            fontWeight: '900',
-            fontFamily: 'Bungee Regular',
-            fill: 0xffffff,
-            align: 'center',
+        this._titleText = new Text({
+            text: i18n.t('paused'),
+            style: {
+                fontSize: 30,
+                fontWeight: '900',
+                fontFamily: 'Bungee Regular',
+                fill: 0xffffff,
+                align: 'center',
+            },
         });
 
         this._titleText.anchor.set(0.5);
         this._titleText.y = -(this._base.height * 0.5) + 50;
-        this._base.addChild(this._titleText);
+        this.view.addChild(this._titleText);
 
-        this._scoreTitleText = new Text(i18n.t('score'), {
-            fontSize: 20,
-            fontWeight: '900',
-            fontFamily: 'Bungee Regular',
-            fill: 0x000000,
-            align: 'center',
+        this._scoreTitleText = new Text({
+            text: i18n.t('score'),
+            style: {
+                fontSize: 20,
+                fontWeight: '900',
+                fontFamily: 'Bungee Regular',
+                fill: 0x000000,
+                align: 'center',
+            },
         });
 
         this._scoreTitleText.anchor.set(0.5);
         this._scoreTitleText.y = -82;
-        this._base.addChild(this._scoreTitleText);
+        this.view.addChild(this._scoreTitleText);
 
-        this._scoreText = new Text('', {
-            fontSize: 60,
-            fontWeight: '900',
-            fontFamily: 'Bungee Regular',
-            fill: 0x000000,
-            align: 'center',
+        this._scoreText = new Text({
+            style: {
+                fontSize: 60,
+                fontWeight: '900',
+                fontFamily: 'Bungee Regular',
+                fill: 0x000000,
+                align: 'center',
+            },
         });
 
         this._scoreText.anchor.set(0.5);
         this._scoreText.y = -37;
-        this._base.addChild(this._scoreText);
+        this.view.addChild(this._scoreText);
     }
 
     /**
      * Set's the score of the player on the panel.
      * @param score - The player's total score.
      */
-    public setScore(score: number)
-    {
+    public setScore(score: number) {
         // Used to add commas into a number, outputs as string
         this._scoreText.text = score.toLocaleString();
-
 
         // Reset fontSize to original state
         this._scoreText.style.fontSize = 60;
 
         // While the score text is bigger than expected, decrease fontsize.
-        while (this._scoreText.width > this._base.width)
-        {
-            (this._scoreText.style.fontSize )--;
+        while (this._scoreText.width > this._base.width) {
+            this._scoreText.style.fontSize--;
         }
     }
 }
@@ -86,12 +89,11 @@ class PausePanel
 /**
  * Callback function definition to help determine user interaction on the pause screen.
  * It will callback with the intended action of the user, either `resume` or `quit` as a parameter
-*/
+ */
 type PauseCallback = (state: 'quit' | 'resume') => void;
 
 /** The overlay shown when the game has been paused. */
-export class PauseOverlay extends Container implements AppScreen
-{
+export class PauseOverlay extends Container implements AppScreen {
     /** A unique identifier for the screen */
     public static SCREEN_ID = 'pause';
     /** An array of bundle IDs for dynamic asset loading. */
@@ -109,12 +111,11 @@ export class PauseOverlay extends Container implements AppScreen
      */
     private _callBack!: PauseCallback;
 
-    constructor()
-    {
+    constructor() {
         super();
 
         // Create the background, this is used as an interaction blocker
-        this._background = new Graphics().beginFill(0x000000, 0.5).drawRect(0, 0, 50, 50);
+        this._background = new Graphics().rect(0, 0, 50, 50).fill({ color: 0x000000, alpha: 0.5 });
         // Prevent interaction behind overlay
         this._background.interactive = true;
         this.addChild(this._background);
@@ -138,8 +139,8 @@ export class PauseOverlay extends Container implements AppScreen
          *  A function to help determine user interaction on the pause screen.
          *  It will callback with the intended action of the user, either `resume` or `quit` as a parameter
          */
-        callback: PauseCallback })
-    {
+        callback: PauseCallback;
+    }) {
         // Set the score in the main panel
         this._panel.setScore(data?.score ?? 0);
 
@@ -151,8 +152,7 @@ export class PauseOverlay extends Container implements AppScreen
     }
 
     /** Called when the screen is being shown. */
-    public async show()
-    {
+    public async show() {
         // Kill tweens of the screen container
         gsap.killTweensOf(this);
 
@@ -162,8 +162,7 @@ export class PauseOverlay extends Container implements AppScreen
     }
 
     /** Called when the screen is being hidden. */
-    public async hide()
-    {
+    public async hide() {
         // Kill tweens of the screen container
         gsap.killTweensOf(this);
 
@@ -175,8 +174,7 @@ export class PauseOverlay extends Container implements AppScreen
      * @param w - width of the screen.
      * @param h - height of the screen.
      */
-    public resize(w: number, h: number)
-    {
+    public resize(w: number, h: number) {
         // Fit background to screen
         this._background.width = w;
         this._background.height = h;
@@ -187,8 +185,7 @@ export class PauseOverlay extends Container implements AppScreen
     }
 
     /** Add buttons to screen. */
-    private _buildButtons()
-    {
+    private _buildButtons() {
         this._audioBtn = new AudioSecondaryButton();
 
         this._panel.view.addChild(this._audioBtn);
@@ -200,8 +197,7 @@ export class PauseOverlay extends Container implements AppScreen
             tint: 0xffc42c,
         });
 
-        this._resumeBtn.onPress.connect(() =>
-        {
+        this._resumeBtn.onPress.connect(() => {
             // Callback to game with the intention to resume
             this._callBack?.('resume');
         });
@@ -214,8 +210,7 @@ export class PauseOverlay extends Container implements AppScreen
             tint: 0x49c8ff,
         });
 
-        this._quitBtn.onPress.connect(() =>
-        {
+        this._quitBtn.onPress.connect(() => {
             // Callback to game with the intention to quit
             this._callBack?.('quit');
         });

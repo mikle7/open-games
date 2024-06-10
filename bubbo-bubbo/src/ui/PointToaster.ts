@@ -7,8 +7,7 @@ import { randomRange } from '../utils/maths/rand';
 /**
  * The PointToaster class is used to display and animate a score that pops up on the screen.
  */
-export class PointToaster
-{
+export class PointToaster {
     /* The container instance that is the root of all visuals in this class */
     public view = new Container();
 
@@ -17,19 +16,22 @@ export class PointToaster
     /** The font fill color for the text */
     private _tint: number;
 
-    constructor()
-    {
+    constructor() {
         this._tint = 0xffffff;
 
         // Create score text
-        this._pointText = new Text('', {
-            fontSize: 40,
-            fontWeight: '900',
-            fontFamily: 'Bungee Regular',
-            fill: this._tint,
-            stroke: 0x000000,
-            strokeThickness: 3,
-            align: 'center',
+        this._pointText = new Text({
+            style: {
+                fontSize: 40,
+                fontWeight: '900',
+                fontFamily: 'Bungee Regular',
+                fill: this._tint,
+                stroke: {
+                    color: 0x000000,
+                    width: 3,
+                },
+                align: 'center',
+            },
         });
 
         this._pointText.anchor.set(0.5);
@@ -43,8 +45,7 @@ export class PointToaster
      * @param onComplete The callback function to call after the animation is complete.
      * @returns The GSAP animation timeline.
      */
-    public popScore(score: number, onComplete: (toaster: this) => void)
-    {
+    public popScore(score: number, onComplete: (toaster: this) => void) {
         // Hide score
         this.view.alpha = 0;
 
@@ -62,8 +63,7 @@ export class PointToaster
             y: this.view.y - randomRange(15, 120),
             alpha: 1,
             duration: 0.25,
-            onComplete: () =>
-            {
+            onComplete: () => {
                 // On movement complete, fade out and call callback function
                 gsap.to(this.view, { alpha: 0, onComplete: () => onComplete?.(this) });
             },
@@ -73,8 +73,7 @@ export class PointToaster
     /**
      * Gets the tint color of the score Text.
      */
-    public get tint(): number
-    {
+    public get tint(): number {
         return this._tint;
     }
 
@@ -82,8 +81,7 @@ export class PointToaster
      * Sets the font fill color of the score Text.
      * @param value - Tint color.
      */
-    public set tint(value: number)
-    {
+    public set tint(value: number) {
         // Store tint
         this._tint = value;
 

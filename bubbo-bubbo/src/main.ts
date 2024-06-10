@@ -11,16 +11,12 @@ import { storage } from './storage';
 import { getUrlParam } from './utils/utils';
 
 /** The PixiJS app Application instance, shared across the project */
-export const app = new Application<HTMLCanvasElement>({
-    resolution: Math.max(window.devicePixelRatio, 2),
-    backgroundColor: 0xffffff,
-});
+export const app = new Application();
 
 let hasInteracted = false;
 
 /** Set up a resize function for the app */
-function resize()
-{
+function resize() {
     const windowWidth = window.innerWidth;
     const windowHeight = window.innerHeight;
     const minWidth = designConfig.content.width;
@@ -34,8 +30,8 @@ function resize()
     const height = windowHeight * scale;
 
     // Update canvas style dimensions and scroll window up to avoid issues on mobile resize
-    app.renderer.view.style.width = `${windowWidth}px`;
-    app.renderer.view.style.height = `${windowHeight}px`;
+    app.renderer.canvas.style.width = `${windowWidth}px`;
+    app.renderer.canvas.style.height = `${windowHeight}px`;
     window.scrollTo(0, 0);
 
     // Update renderer  and navigation screens dimensions
@@ -45,10 +41,15 @@ function resize()
 }
 
 /** Setup app and initialise assets */
-async function init()
-{
-    // Add pixi canvas element (app.view) to the document's body
-    document.body.appendChild(app.view);
+async function init() {
+    // Initialize the app
+    await app.init({
+        resolution: Math.max(window.devicePixelRatio, 2),
+        backgroundColor: 0xffffff,
+    });
+
+    // Add pixi canvas element to the document's body
+    document.body.appendChild(app.canvas);
 
     // Whenever the window resizes, call the 'resize' function
     window.addEventListener('resize', resize);
@@ -69,10 +70,8 @@ async function init()
     audio.muted(storage.getStorageItem('muted'));
 
     // Prepare for user interaction, and play the music on event
-    document.addEventListener('pointerdown', () =>
-    {
-        if (!hasInteracted)
-        {
+    document.addEventListener('pointerdown', () => {
+        if (!hasInteracted) {
             // Only play audio if it hasn't already been played
             bgm.play('audio/bubbo-bubbo-bg-music.wav');
         }
@@ -81,15 +80,11 @@ async function init()
     });
 
     // Check for visibility sate so we can mute the audio on "hidden"
-    document.addEventListener('visibilitychange', () =>
-    {
-        if (document.visibilityState !== 'visible')
-        {
+    document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState !== 'visible') {
             // Always mute on hidden
             audio.muted(true);
-        }
-        else
-        {
+        } else {
             // Only unmute if it was previously unmuted
             audio.muted(storage.getStorageItem('muted'));
         }
@@ -97,17 +92,12 @@ async function init()
 
     // Show first screen - go straight to game if '?play' param is present in url
     // This is used for debugging
-    if (getUrlParam('play') !== null)
-    {
+    if (getUrlParam('play') !== null) {
         await Assets.loadBundle(TitleScreen.assetBundles);
         await navigation.goToScreen(GameScreen);
-    }
-    else if (getUrlParam('loading') !== null)
-    {
+    } else if (getUrlParam('loading') !== null) {
         await navigation.goToScreen(LoadScreen);
-    }
-    else
-    {
+    } else {
         await navigation.goToScreen(TitleScreen);
     }
 }

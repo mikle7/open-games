@@ -8,13 +8,11 @@ import { i18n } from '../utils/i18n';
 /**
  * The panel that contains instructions on how to play the game.
  */
-export class HelperPanel
-{
+export class HelperPanel {
     /* The container instance that is the root of all visuals in this class */
     public view = new Container();
 
-    constructor()
-    {
+    constructor() {
         // Create the base panel
         const panel = Sprite.from('panel-small-instructions');
 
@@ -25,27 +23,27 @@ export class HelperPanel
         const text = i18n.t(device.isMobileDevice() ? 'helperMobile' : 'helperDesktop');
 
         // Create a text object with the instructions text
-        const helpText = new Text(text, {
-            fontSize: 19,
-            fontWeight: '900',
-            fontFamily: 'Opensans Semibold',
-            fill: 0x000000,
-            align: 'center',
+        const helpText = new Text({
+            text,
+            style: {
+                fontSize: 19,
+                fontWeight: '900',
+                fontFamily: 'Opensans Semibold',
+                fill: 0x000000,
+                align: 'center',
+            },
         });
 
         helpText.anchor.set(0.5);
-
-        helpText.x = -75;
-        panel.addChild(helpText);
-
-        this.view.addChild(panel);
+        helpText.x = -55;
+        helpText.scale.set(0.75);
+        this.view.addChild(panel, helpText);
     }
 
     /**
      * Prepares the view container for display by setting its x-coordinate to the off-screen position.
      */
-    public prepare()
-    {
+    public prepare() {
         // Set this view's position to offscreen
         this.view.x = this._offScreenPos;
     }
@@ -53,9 +51,8 @@ export class HelperPanel
     /**
      * Animates the helper panel into view
      * @returns The GSAP tween of the animation.
-    */
-    public show()
-    {
+     */
+    public show() {
         return gsap.to(this.view, {
             // Since the helper panel is initially set offscreen, it just needs to return to `0`
             x: 0,
@@ -69,8 +66,7 @@ export class HelperPanel
      * Animates the helper panel back out of view
      * @returns The GSAP tween of the animation.
      */
-    public hide()
-    {
+    public hide() {
         return gsap.to(this.view, {
             x: this._offScreenPos,
         });
@@ -81,8 +77,7 @@ export class HelperPanel
      * Offscreen in this instance is the gameplay view, not the full window.
      * @returns The x-coordinate of the off-screen position.
      */
-    private get _offScreenPos(): number
-    {
-        return -(designConfig.content.width * 0.5) - (this.view.width * 0.5);
+    private get _offScreenPos(): number {
+        return -(designConfig.content.width * 0.5) - this.view.width * 0.5;
     }
 }

@@ -1,13 +1,12 @@
 import gsap from 'gsap';
-import { Container, Texture, TilingSprite } from 'pixi.js';
+import { Container, Texture, Ticker, TilingSprite } from 'pixi.js';
 
 import { designConfig } from '../game/designConfig';
 import { Game } from '../game/Game';
 import type { AppScreen } from '../navigation';
 
 /** The screen that contains all the gameplay */
-export class GameScreen extends Container implements AppScreen
-{
+export class GameScreen extends Container implements AppScreen {
     /** A unique identifier for the screen */
     public static SCREEN_ID = 'game';
     /** An array of bundle IDs for dynamic asset loading. */
@@ -16,14 +15,19 @@ export class GameScreen extends Container implements AppScreen
     private readonly _background: TilingSprite;
     private readonly _game: Game;
 
-    constructor()
-    {
+    constructor() {
         super();
 
         // Create the background
-        this._background = new TilingSprite(Texture.from('background-tile-space'), 64, 64);
-        this._background.tileScale.set(designConfig.backgroundTileScale);
-
+        this._background = new TilingSprite({
+            texture: Texture.from('background-tile-space'),
+            width: 64,
+            height: 64,
+            tileScale: {
+                x: designConfig.backgroundTileScale,
+                y: designConfig.backgroundTileScale,
+            },
+        });
         this.addChild(this._background);
 
         // Create an instance of the game and initialise
@@ -33,8 +37,7 @@ export class GameScreen extends Container implements AppScreen
     }
 
     /** Called when the screen is being shown. */
-    public async show()
-    {
+    public async show() {
         // Kill tweens of the screen container
         gsap.killTweensOf(this);
 
@@ -49,8 +52,7 @@ export class GameScreen extends Container implements AppScreen
     }
 
     /** Called when the screen is being hidden. */
-    public async hide()
-    {
+    public async hide() {
         // Kill tweens of the screen container
         gsap.killTweensOf(this);
         // End the game
@@ -62,11 +64,10 @@ export class GameScreen extends Container implements AppScreen
 
     /**
      * Called every frame.
-     * @param delta - The time elapsed since the last update.
+     * @param time - Ticker object with time related data.
      */
-    public update(delta: number)
-    {
-        this._game.update(delta);
+    public update(time: Ticker) {
+        this._game.update(time.deltaTime);
     }
 
     /**
@@ -74,8 +75,7 @@ export class GameScreen extends Container implements AppScreen
      * @param w - width of the screen.
      * @param h - height of the screen.
      */
-    public resize(w: number, h: number)
-    {
+    public resize(w: number, h: number) {
         // Fit background to screen
         this._background.width = w;
         this._background.height = h;

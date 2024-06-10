@@ -1,10 +1,10 @@
 <div align="center">
-    <h1>Pixi Open Games</h1>
-    <h3>Open source games powered by Pixi!</h3>
+    <h1>PixiJS Open Games</h1>
+    <h3>Open source games powered by PixiJS!</h3>
 </div>
 <br>
 
-Pixi Open Games is a collection of open source games powered by PixiJS. The goal of this project is to provide a collection of games that can be used to learn how to make professional games. The games are built using PixiJS and its ecosystem of plugins and tools.
+PixiJS Open Games is a collection of open source games powered by PixiJS. The goal of this project is to provide a collection of games that can be used to learn how to make professional games. The games are built using PixiJS and its ecosystem of plugins and tools.
 
 ## Games
 
@@ -12,11 +12,11 @@ Below is a list of games that are currently available in this repository. Each g
 
 - Bubbo Bubbo
   - [Code](/bubbo-bubbo/README.md)
-  - [Play](https://bubbo-bubbo.netlify.app/)
+  - [Play](https://pixijs.io/open-games/bubbo-bubbo)
 
 - Puzzling Potions
   - [Code](/puzzling-potions/README.md)
-  - [Play](https://puzzling-potions.netlify.app/)
+  - [Play](https://pixijs.io/open-games/puzzling-potions)
 
 ## Tools
 

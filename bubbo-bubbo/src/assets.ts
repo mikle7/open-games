@@ -2,27 +2,24 @@ import {
     Assets,
     extensions,
     ExtensionType,
-    ResolverAssetsArray,
+    Resolver,
     resolveTextureUrl,
     ResolveURLParser,
-    settings,
+    UnresolvedAsset,
 } from 'pixi.js';
 
 import manifest from '../src/manifest.json';
 
 export const resolveJsonUrl = {
     extension: ExtensionType.ResolveParser,
-    test: (value: string): boolean =>
-        // @ts-expect-error should be fixed in the next version of pixi (RETINA_PREFIX is of type RegEx)
-        settings.RETINA_PREFIX.test(value) && value.endsWith('.json'),
+    test: (value: string): boolean => Resolver.RETINA_PREFIX.test(value) && value.endsWith('.json'),
     parse: resolveTextureUrl.parse,
 } as ResolveURLParser;
 
 extensions.add(resolveJsonUrl);
 
 /** Initialise and start background loading of all assets */
-export async function initAssets()
-{
+export async function initAssets() {
     // Init PixiJS assets with this asset manifest
     await Assets.init({ manifest });
 
@@ -41,19 +38,15 @@ export async function initAssets()
  * @param bundle - The unique id of the bundle
  * @returns Whether or not the bundle has been loaded
  */
-export function isBundleLoaded(bundle: string)
-{
+export function isBundleLoaded(bundle: string) {
     const bundleManifest = manifest.bundles.find((b) => b.name === bundle);
 
-    if (!bundleManifest)
-    {
+    if (!bundleManifest) {
         return false;
     }
 
-    for (const asset of bundleManifest.assets as ResolverAssetsArray)
-    {
-        if (!Assets.cache.has(asset.name as string))
-        {
+    for (const asset of bundleManifest.assets as UnresolvedAsset[]) {
+        if (!Assets.cache.has(asset.alias as string)) {
             return false;
         }
     }
@@ -61,12 +54,9 @@ export function isBundleLoaded(bundle: string)
     return true;
 }
 
-export function areBundlesLoaded(bundles: string[])
-{
-    for (const name of bundles)
-    {
-        if (!isBundleLoaded(name))
-        {
+export function areBundlesLoaded(bundles: string[]) {
+    for (const name of bundles) {
+        if (!isBundleLoaded(name)) {
             return false;
         }
     }
